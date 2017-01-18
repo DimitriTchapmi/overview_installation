@@ -15,7 +15,7 @@ fi
 mv -t /etc/overview supervision.sh inventaire.sh id_rsa
 
 cd /etc/overview
-chmod 700 supervision.sh inventaire.sh
+chmod +x supervision.sh inventaire.sh
 chmod 600 id_rsa
 touch ip
 touch entreprise
