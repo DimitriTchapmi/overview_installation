@@ -29,7 +29,6 @@ dependances=(lshw vnstat lsof bc)
 for elem in ${dependances[@]}
 do
     check=`dpkg -l | grep $elem | cut -d " " -f1`
-    echo $check
     if [ "$check" == "" ]
 then
         echo "Installation du paquet $elem"
@@ -40,10 +39,10 @@ done
 echo "Edition du crontab"
 touch /etc/cron.d/overview
 echo "# Execution du script supervision toutes les minutes et script inventaire toutes les semaines" > /etc/cron.d/overview
-echo "*/1 * * * * root /etc/overview/supervision.sh" > /etc/cron.d/overview
-echo "* * * * */0 root /etc/overview/inventaire.sh" > /etc/cron.d/overview
+echo "*/1 * * * * root /etc/overview/supervision.sh" >> /etc/cron.d/overview
+echo "* * * * */0 root /etc/overview/inventaire.sh" >> /etc/cron.d/overview
 
 echo "Collecte des données de l'inventaire"
-./inventaire.sh
-scp -i /home/ubuntu/overview/id_rsa /home/ubuntu/overview/intech_10.8.101.2 transfert@10.8.100.237:/home/transfert/nouveau
-echo "scp -i /home/ubuntu/overview/id_rsa /home/ubuntu/overview/intech_10.8.101.2 transfert@10.8.100.237:/home/transfert/inventaire" >> /etc/overview/inventaire.sh
+/etc/overview/inventaire.sh
+scp -i /etc/overview/id_rsa -P 4322 /etc/overview/$entreprise"_"$ip transfert@labo.itinet.fr:/home/transfert/nouveau
+echo "scp -i /etc/overview/id_rsa -P 4322 /etc/overview/$entreprise"_"$ip transfert@labo.itinet.fr:/home/transfert/inventaire" >> /etc/overview/inventaire.sh
