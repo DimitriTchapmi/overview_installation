@@ -1,5 +1,7 @@
 #!/bin/bash
 
+entreprise=`cat /etc/overview/entreprise`
+ip=`cat /etc/overview/ip`
         cat /proc/cpuinfo > /etc/overview/test
         dmidecode > /etc/overview/test2
         lshw -C network > /etc/overview/test3
