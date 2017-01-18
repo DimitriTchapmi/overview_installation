@@ -11,7 +11,7 @@ ip=`cat /etc/overview/ip`
         #sed -i "s/^[ \t]//g" /etc/overview/test2
         #sed -i "s/ //g" /etc/overview/test2
         touch /etc/overview/$entreprise"_"$ip
-        chmod 660 /etc/overview/$entreprise"_"$ip
+        chmod 664 /etc/overview/$entreprise"_"$ip
         echo "BI0S information" > /etc/overview/$entreprise"_"$ip
         sed -n /'Vendor'/p /etc/overview/test2 >> /etc/overview/$entreprise"_"$ip
         sed -n /'Release Date'/p /etc/overview/test2 >> /etc/overview/$entreprise"_"$ip
