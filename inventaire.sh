@@ -70,7 +70,7 @@ ip=`cat /etc/overview/ip`
         net6=`ifconfig | grep 'inet adr:' |awk '{print $2}'|cut -d: -f2`
         tmp=`sed -n /'logical name'/p /etc/overview/test3`
         cp=`echo $tmp|tr -d -c "\\:"| wc -c`
-        ip=`sed -n /'logical name'/p /etc/overview/test3|awk '{print $3}'`
+        ipnet=`sed -n /'logical name'/p /etc/overview/test3|awk '{print $3}'`
         #echo $cp
         #echo $net|awk '{print $2}'|cut -d: -f2
         if [ $cp -le 1 ]; then
@@ -79,7 +79,7 @@ ip=`cat /etc/overview/ip`
         sed -n /'vendor'/p /etc/overview/test3 >> /etc/overview/$entreprise"_"$ip
         sed -n /'logical name'/p /etc/overview/test3 >> /etc/overview/$entreprise"_"$ip
         sed -n /'serial'/p /etc/overview/test3 >> /etc/overview/$entreprise"_"$ip
-        inet=`echo $ip |awk '{print $1}'|cut -d' ' -f1`
+        inet=`echo $ipnet |awk '{print $1}'|cut -d' ' -f1`
         aff=`ifconfig $inet| grep "inet ad" | cut -f2 -d: | awk '{print $1}'`
         echo "       ip:"$aff >> /etc/overview/$entreprise"_"$ip
         else
