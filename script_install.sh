@@ -40,7 +40,7 @@ echo "Edition du crontab"
 touch /etc/cron.d/overview
 echo "# Execution du script supervision toutes les minutes et script inventaire toutes les semaines" > /etc/cron.d/overview
 echo "*/1 * * * * root /etc/overview/supervision.sh" >> /etc/cron.d/overview
-echo "* * * * */0 root /etc/overview/inventaire.sh" >> /etc/cron.d/overview
+echo "* * * * 0 root /etc/overview/inventaire.sh" >> /etc/cron.d/overview
 
 echo "Collecte des données de l'inventaire"
 /etc/overview/inventaire.sh
