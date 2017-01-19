@@ -55,11 +55,11 @@ moyenne() {
         mntpoint=`sed -n /'part'/p /etc/overview/disk|awk '{print $7}'`
         partsize=`sed -n /'^\/dev'/p /etc/overview/partition |awk '{print $2}'`
         partuse=`sed -n /'^\/dev'/p /etc/overview/partition|awk '{print $3}'`
+        disksize=`sed -n /'disk'/p /etc/overview/disk |awk '{print $4}'`
+        diskname=`sed -n /'disk'/p /etc/overview/disk |awk '{print $1}'`
         if [ $cp -le 1 ]; then
         echo "total_part_"$partname"_"$mntpoint":"$partsize >> /etc/overview/$entreprise"_"$ip
         echo "utilisé_part_"$partname"_"$mntpoint":"$partuse >> /etc/overview/$entreprise"_"$ip
-        disksize=`sed -n /'disk'/p /etc/overview/disk |awk '{print $4}'`
-        diskname=`sed -n /'disk'/p /etc/overview/disk |awk '{print $1}'`
         echo "disque_"$diskname":"$disksize >> /etc/overview/$entreprise"_"$ip
         else
         for i in `seq 1 $cp`
