@@ -2,13 +2,8 @@
 
 entreprise=`cat /etc/overview/entreprise`
 ip=`cat /etc/overview/ip`
-<<<<<<< HEAD
 
-
-        cat /proc/cpuinfo > test
-=======
         cat /proc/cpuinfo > /etc/overview/test
->>>>>>> 2606ac3bd718e072580a5dc521561dce2bca4d42
         dmidecode > /etc/overview/test2
         lshw -C network > /etc/overview/test3
         lshw -C cpu > /etc/overview/test4
