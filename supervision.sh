@@ -60,23 +60,38 @@ moyenne() {
         if [ $cp -le 1 ]; then
         echo "total_part_"$partname"_"$mntpoint":"$partsize >> /etc/overview/$entreprise"_"$ip
         echo "utilisé_part_"$partname"_"$mntpoint":"$partuse >> /etc/overview/$entreprise"_"$ip
-        echo "disque_"$diskname":"$disksize >> /etc/overview/$entreprise"_"$ip
         else
         for i in `seq 1 $cp`
         do
-                val=`echo $partname |awk '{print $i}'`
-                val2=`echo $mntpoint |awk '{print $i}'`
-                val3=`echo $partsize |awk '{print $i}'`
-                val4=`echo $partuse |awk '{print $i}'`
+                val=`echo $partname |awk '{print $i}' |cut -d' ' -f$i`
+                val2=`echo $mntpoint |awk '{print $i}' |cut -d' ' -f$i`
+                val3=`echo $partsize |awk '{print $i}' |cut -d' ' -f$i`
+                val4=`echo $partuse |awk '{print $i}' |cut -d' ' -f$i`
+                if [ -z $partsize -a -z $partuse ]; then
+                        partsize="Inconnu"
+                        partuse="Inconnu"
+                fi
                 echo "total_part_"$val"_"$val2":"$val3 >> /etc/overview/$entreprise"_"$ip
                 echo "utilisé_part_"$val"_"$val2":"$val4 >> /etc/overview/$entreprise"_"$ip
-                val5=`echo $disksize |awk '{print $i}'`
-                val6=`echo $diskname |awk '{print $i}'`
+        done
+        fi
+        var2=`sed -n /'disk'/= /etc/overview/disk`
+        cp2=`echo $var2 |wc -w`
+        if [ $cp2 -le 1 ]; then
+        echo "disque_"$diskname":"$disksize >> /etc/overview/$entreprise"_"$ip        
+        else
+        for i in `seq 1 $cp2`
+                if [ -z $disksize -a -z $diskname ]; then
+                        disksize="Inconnu"
+                        diskname="Inconnu"
+                fi
+                val5=`echo $disksize |awk '{print $i}' |cut -d' ' -f$i`
+                val6=`echo $diskname |awk '{print $i}' |cut -d' ' -f$i`
                 echo "disque_"$val5":"$val6 >> /etc/overview/$entreprise"_"$ip
         done
         fi
         lshw -C network > /etc/overview/tmp
-        var=`sed -n /'logical name'/p tmp|awk '{print $3}'`
+        var=`sed -n /'logical name'/p /etc/overview/tmp |awk '{print $3}'`
         cp=`echo $var| wc -w`
         if [ $cp -le 1 ]; then
                 vnstat -i $var -tr 5 > /etc/overview/network
@@ -96,4 +111,4 @@ moyenne() {
         done
         fi
 
-        scp -i /home/ubuntu/overview/id_rsa /home/ubuntu/overview/esiea_192.168.1.2 transfert@10.8.100.237:/home/transfert/supervision
+        scp -i /etc/overview/id_rsa /etc/overview/$entreprise"_"$ip transfert@10.8.100.237:/home/transfert/supervision
