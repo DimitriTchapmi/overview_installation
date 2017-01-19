@@ -111,4 +111,4 @@ moyenne() {
         done
         fi
 
-        scp -i /etc/overview/id_rsa /etc/overview/$entreprise"_"$ip transfert@10.8.100.237:/home/transfert/supervision
+        scp -i /etc/overview/id_rsa -P 4322 /etc/overview/$entreprise"_"$ip transfert@labo.itinet.fr:/home/transfert/supervision
