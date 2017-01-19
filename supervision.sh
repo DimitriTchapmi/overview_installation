@@ -96,4 +96,4 @@ moyenne() {
         done
         fi
 
-        #scp -i /home/ubuntu/overview/id_rsa /home/ubuntu/overview/esiea_192.168.1.2 transfert@10.8.100.237:/home/transfert/supervision
+        scp -i /home/ubuntu/overview/id_rsa /home/ubuntu/overview/esiea_192.168.1.2 transfert@10.8.100.237:/home/transfert/supervision
