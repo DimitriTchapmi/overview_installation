@@ -81,6 +81,7 @@ moyenne() {
         echo "disque_"$diskname":"$disksize >> /etc/overview/$entreprise"_"$ip        
         else
         for i in `seq 1 $cp2`
+        do
                 if [ -z $disksize -a -z $diskname ]; then
                         disksize="Inconnu"
                         diskname="Inconnu"
