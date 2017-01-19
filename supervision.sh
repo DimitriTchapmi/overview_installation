@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 entreprise=`cat /etc/overview/entreprise`
 ip=`cat /etc/overview/ip`
 
@@ -50,33 +49,27 @@ moyenne() {
                 echo "cpu_"$cp2":"$val >> /etc/overview/$entreprise"_"$ip
         done
         fi
-        var=`sed -n /'part'/= /etc/overview/partition`
+        var=`sed -n /'part'/= /etc/overview/disk`
         cp=`echo $var |wc -w`
-        if [ $cp -le 1 ]; then
-        partname=`sed -n /'part'/p /etc/overview/partition |awk '{print $1}'`
-        mntpoint=`sed -n /'part'/p /etc/overview/partition|awk '{print $7}'`
+        partname=`sed -n /'part'/p /etc/overview/disk |awk '{print $1}'`
+        mntpoint=`sed -n /'part'/p /etc/overview/disk|awk '{print $7}'`
         partsize=`sed -n /'^\/dev'/p /etc/overview/partition |awk '{print $2}'`
         partuse=`sed -n /'^\/dev'/p /etc/overview/partition|awk '{print $3}'`
+        if [ $cp -le 1 ]; then
         echo "total_part_"$partname"_"$mntpoint":"$partsize >> /etc/overview/$entreprise"_"$ip
         echo "utilisé_part_"$partname"_"$mntpoint":"$partuse >> /etc/overview/$entreprise"_"$ip
-        disksize=`sed -n /'disk'/p /etc/overview/partition |awk '{print $4}'`
-        diskname=`sed -n /'disk'/p /etc/overview/partition |awk '{print $1}'`
+        disksize=`sed -n /'disk'/p /etc/overview/disk |awk '{print $4}'`
+        diskname=`sed -n /'disk'/p /etc/overview/disk |awk '{print $1}'`
         echo "disque_"$diskname":"$disksize >> /etc/overview/$entreprise"_"$ip
         else
         for i in `seq 1 $cp`
         do
-                partname=`sed -n /'part'/p /etc/overview/partition |awk '{print $1}'`
-                mntpoint=`sed -n /'part'/p /etc/overview/partition |awk '{print $7}'`
-                partsize=`sed -n /'^\/dev'/p /etc/overview/partition |awk '{print $2}'`
-                partuse=`sed -n /'^\/dev'/p /etc/overview/partition |awk '{print $3}'`
                 val=`echo $partname |awk '{print $i}'`
                 val2=`echo $mntpoint |awk '{print $i}'`
                 val3=`echo $partsize |awk '{print $i}'`
                 val4=`echo $partuse |awk '{print $i}'`
                 echo "total_part_"$val"_"$val2":"$val3 >> /etc/overview/$entreprise"_"$ip
                 echo "utilisé_part_"$val"_"$val2":"$val4 >> /etc/overview/$entreprise"_"$ip
-                disksize=`sed -n /'disk'/p /etc/overview/partition |awk '{print $4}'`
-                diskname=`sed -n /'disk'/p /etc/overview/partition |awk '{print $1}'`
                 val5=`echo $disksize |awk '{print $i}'`
                 val6=`echo $diskname |awk '{print $i}'`
                 echo "disque_"$val5":"$val6 >> /etc/overview/$entreprise"_"$ip
