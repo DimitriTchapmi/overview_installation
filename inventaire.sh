@@ -109,12 +109,12 @@ ip=`cat /etc/overview/ip`
         if [ $cp -le 1 ]; then
                 if [ -s /sys/class/block/$stk/device/model ]; then
                         diskmodel=`cat /sys/class/block/$stk/device/model`
-                        echo "       Disque:/dev/"$stk >> /etc/overview/$entreprise"_"$ip
+                        echo "       Disque_"$cp":/dev/"$stk >> /etc/overview/$entreprise"_"$ip
                         echo "       Modèle:"$diskmodel >> /etc/overview/$entreprise"_"$ip
                         echo "       Taille disque:"$stk2 >> /etc/overview/$entreprise"_"$ip
                         echo -e "\n" >> /etc/overview/$entreprise"_"$ip
                         else
-                        echo "       Disque:/dev/"$stk >> /etc/overview/$entreprise"_"$ip
+                        echo "       Disque_"$cp":/dev/"$stk >> /etc/overview/$entreprise"_"$ip
                         echo "       Modèle:inconnu" >> /etc/overview/$entreprise"_"$ip
                         echo "       Taille disque:"$stk2 >> /etc/overview/$entreprise"_"$ip
                         echo -e "\n" >> /etc/overview/$entreprise"_"$ip
@@ -123,7 +123,7 @@ ip=`cat /etc/overview/ip`
         for i in `seq 1 $cp`
         do
                 disk=`echo $stk|awk '{print $i}'|cut -d' ' -f$i`
-                echo "       Disque:/dev/"$disk  >> /etc/overview/$entreprise"_"$ip
+                echo "       Disque_"$i":/dev/"$disk  >> /etc/overview/$entreprise"_"$ip
                 if [ -s /sys/class/block/$stk/device/model ]; then
                         diskmodel=`cat /sys/class/block/$disk/device/model`
                         else echo "       Modèle:inconnu" >> /etc/overview/$entreprise"_"$ip
