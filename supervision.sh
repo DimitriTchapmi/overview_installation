@@ -83,7 +83,7 @@ moyenne() {
         else
         for i in `seq 1 $cp2`
         do
-                if [ -z $disksize -a -z $diskname ]; then
+                if [ -z $disksize ]; then
                         disksize='Inconnu'
                         diskname='Inconnu'
                 fi

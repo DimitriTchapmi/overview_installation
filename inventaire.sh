@@ -54,7 +54,7 @@ ip=`cat /etc/overview/ip`
         echo -e "\nmemory information" >> /etc/overview/$entreprise"_"$ip
         memsize=`sed -n /'\tSize: '/p /etc/overview/test2`
         memdev=`sed -n /'Number Of Devices'/p /etc/overview/test2`
-        if [ -z $memsize -a -z $memdev ]; then
+        if [ -z $memsize ]; then
         echo "Size:Inconnu" >> /etc/overview/$entreprise"_"$ip
         echo "Number of Devices:inconnu" >> /etc/overview/$entreprise"_"$ip
         else
