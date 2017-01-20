@@ -52,11 +52,12 @@ moyenne() {
         var=`sed -n /'part'/= /etc/overview/disk`
         cp=`echo $var |wc -w`
         partname=`sed -n /'part'/p /etc/overview/disk |awk '{print $1}'`
-        mntpoint=`sed -n /'part'/p /etc/overview/disk|awk '{print $7}'`
+        mntpoint=`sed -n /'part'/p /etc/overview/disk |awk '{print $7}'`
         partsize=`sed -n /'^\/dev'/p /etc/overview/partition |awk '{print $2}'`
-        partuse=`sed -n /'^\/dev'/p /etc/overview/partition|awk '{print $3}'`
+        partuse=`sed -n /'^\/dev'/p /etc/overview/partition |awk '{print $3}'`
         disksize=`sed -n /'disk'/p /etc/overview/disk |awk '{print $4}'`
         diskname=`sed -n /'disk'/p /etc/overview/disk |awk '{print $1}'`
+        echo $partsize$partuse > /etc/overview/view
         if [ $cp -le 1 ]; then
         echo "total_part_"$partname"_"$mntpoint":"$partsize >> /etc/overview/$entreprise"_"$ip
         echo "utilisé_part_"$partname"_"$mntpoint":"$partuse >> /etc/overview/$entreprise"_"$ip
@@ -65,11 +66,11 @@ moyenne() {
         do
                 val=`echo $partname |awk '{print $i}' |cut -d' ' -f$i`
                 val2=`echo $mntpoint |awk '{print $i}' |cut -d' ' -f$i`
-                val3=`echo $partsize |awk '{print $i}' |cut -d' ' -f$i`
-                val4=`echo $partuse |awk '{print $i}' |cut -d' ' -f$i`
-                if [ -z $partsize -a -z $partuse ]; then
-                        partsize="Inconnu"
-                        partuse="Inconnu"
+                val3=`echo $partsize |awk '{print $i}' |cut -d' ' -f$i-1`
+                val4=`echo $partuse |awk '{print $i}' |cut -d' ' -f$i-1`
+                if [ -z $val3 ]; then
+                        val3='Inconnu'
+                        val4='Inconnu'
                 fi
                 echo "total_part_"$val"_"$val2":"$val3 >> /etc/overview/$entreprise"_"$ip
                 echo "utilisé_part_"$val"_"$val2":"$val4 >> /etc/overview/$entreprise"_"$ip
@@ -78,13 +79,13 @@ moyenne() {
         var2=`sed -n /'disk'/= /etc/overview/disk`
         cp2=`echo $var2 |wc -w`
         if [ $cp2 -le 1 ]; then
-        echo "disque_"$diskname":"$disksize >> /etc/overview/$entreprise"_"$ip        
+        echo "disque_"$diskname":"$disksize >> /etc/overview/$entreprise"_"$ip
         else
         for i in `seq 1 $cp2`
         do
                 if [ -z $disksize -a -z $diskname ]; then
-                        disksize="Inconnu"
-                        diskname="Inconnu"
+                        disksize='Inconnu'
+                        diskname='Inconnu'
                 fi
                 val5=`echo $disksize |awk '{print $i}' |cut -d' ' -f$i`
                 val6=`echo $diskname |awk '{print $i}' |cut -d' ' -f$i`
@@ -98,8 +99,7 @@ moyenne() {
                 vnstat -i $var -tr 5 > /etc/overview/network
                 debent=`sed -n /'rx'/p /etc/overview/network |awk '{print $2}'`
                 debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $2}'`
-                echo "carte_"$var":"$debent >> /etc/overview/$entreprise"_"$ip # en kb/s
-                echo "carte_"$var":"$debsor >> /etc/overview/$entreprise"_"$ip # en kb/s
+                echo "carte_"$var":"$debent";"$debsor >> /etc/overview/$entreprise"_"$ip # en kb/s
         else
         for i in `seq 1 $cp`
         do
@@ -107,8 +107,7 @@ moyenne() {
                 vnstat -i $eth -tr 5 > /etc/overview/network
                 debent=`sed -n /'rx'/p /etc/overview/network |awk '{print $2}'`
                 debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $2}'`
-                echo "carte_"$var":"$debent >> /etc/overview/$entreprise"_"$ip # en kb/s
-                echo "carte_"$var":"$debsor >> /etc/overview/$entreprise"_"$ip # en kb/s
+                echo "carte_"$var":"$debent";"$debsor >> /etc/overview/$entreprise"_"$ip
         done
         fi
 
