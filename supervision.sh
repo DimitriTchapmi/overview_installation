@@ -66,8 +66,8 @@ moyenne() {
         do
                 val=`echo $partname |awk '{print $i}' |cut -d' ' -f$i`
                 val2=`echo $mntpoint |awk '{print $i}' |cut -d' ' -f$i`
-                val3=`echo $partsize |awk '{print $i}' |cut -d' ' -f$i-1`
-                val4=`echo $partuse |awk '{print $i}' |cut -d' ' -f$i-1`
+                val3=`df -h /dev/$val |awk '{print $2}'`
+                val4=`df -h /dev/$val |awk '{print $3}'`
                 if [ -z $val3 ]; then
                         val3='Inconnu'
                         val4='Inconnu'
@@ -98,16 +98,20 @@ moyenne() {
         if [ $cp -le 1 ]; then
                 vnstat -i $var -tr 5 > /etc/overview/network
                 debent=`sed -n /'rx'/p /etc/overview/network |awk '{print $2}'`
-                debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $2}'`
-                echo "carte_"$var":"$debent";"$debsor >> /etc/overview/$entreprise"_"$ip # en kb/s
+                valent=`sed -n /'rx'/p /etc/overview/network |awk '{print $3}'`
+                debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $3}'`
+                valsor=`sed -n /'rx'/p /etc/overview/network |awk '{print $2}'`
+                echo "carte_"$var":"$debent $valent";"$debsor $valsor >> /etc/overview/$entreprise"_"$ip # en kb/s
         else
         for i in `seq 1 $cp`
         do
                 eth=`echo $var|awk '{print $i}'|cut -d' ' -f$i`
                 vnstat -i $eth -tr 5 > /etc/overview/network
                 debent=`sed -n /'rx'/p /etc/overview/network |awk '{print $2}'`
-                debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $2}'`
-                echo "carte_"$var":"$debent";"$debsor >> /etc/overview/$entreprise"_"$ip
+                valent=`sed -n /'rx'/p /etc/overview/network |awk '{print $3}'`
+                debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $3}'`
+                valsor=`sed -n /'rx'/p /etc/overview/network |awk '{print $2}'`
+                echo "carte_"$var":"$debent $valent";"$debsor $valsor >> /etc/overview/$entreprise"_"$ip
         done
         fi
 
