@@ -66,8 +66,8 @@ moyenne() {
         do
                 val=`echo $partname |awk '{print $i}' |cut -d' ' -f$i`
                 val2=`echo $mntpoint |awk '{print $i}' |cut -d' ' -f$i`
-                val3=`df -h /dev/$val |awk '{print $2}'`
-                val4=`df -h /dev/$val |awk '{print $3}'`
+                val3=`df -h /dev/$val |grep / |awk '{print $2}'`
+                val4=`df -h /dev/$val |grep / |awk '{print $3}'`
                 if [ -z $val3 ]; then
                         val3='Inconnu'
                         val4='Inconnu'
