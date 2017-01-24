@@ -99,8 +99,8 @@ moyenne() {
                 vnstat -i $var -tr 5 > /etc/overview/network
                 debent=`sed -n /'rx'/p /etc/overview/network |awk '{print $2}'`
                 valent=`sed -n /'rx'/p /etc/overview/network |awk '{print $3}'`
-                debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $3}'`
-                valsor=`sed -n /'rx'/p /etc/overview/network |awk '{print $2}'`
+                debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $2}'`
+                valsor=`sed -n /'rx'/p /etc/overview/network |awk '{print $3}'`
                 echo "carte_"$var":"$debent $valent";"$debsor $valsor >> /etc/overview/$entreprise"_"$ip # en kb/s
         else
         for i in `seq 1 $cp`
@@ -109,8 +109,8 @@ moyenne() {
                 vnstat -i $eth -tr 5 > /etc/overview/network
                 debent=`sed -n /'rx'/p /etc/overview/network |awk '{print $2}'`
                 valent=`sed -n /'rx'/p /etc/overview/network |awk '{print $3}'`
-                debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $3}'`
-                valsor=`sed -n /'rx'/p /etc/overview/network |awk '{print $2}'`
+                debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $2}'`
+                valsor=`sed -n /'rx'/p /etc/overview/network |awk '{print $3}'`
                 echo "carte_"$var":"$debent $valent";"$debsor $valsor >> /etc/overview/$entreprise"_"$ip
         done
         fi
