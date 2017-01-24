@@ -25,10 +25,10 @@ echo $ip > ip
 echo $entreprise > entreprise
 
 echo "Vérification des paquets nécessaires"
-dependances=(lshw vnstat lsof bc)
+dependances=(lshw vnstat lsof bc lsb-release)
 for elem in ${dependances[@]}
 do
-    check=`dpkg -l | grep $elem | cut -d " " -f1`
+    check=`dpkg -l | grep -w $elem | cut -d " " -f1`
     if [ "$check" == "" ]
 then
         echo "Installation du paquet $elem"
