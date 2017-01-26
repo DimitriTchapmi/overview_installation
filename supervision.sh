@@ -214,7 +214,7 @@ moyenne() {
                 valent=`sed -n /'rx'/p /etc/overview/network |awk '{print $3}'`
                 debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $2}'`
                 valsor=`sed -n /'rx'/p /etc/overview/network |awk '{print $3}'`
-                echo "carte_"$var":"$debent $valent";"$debsor $valsor >> /etc/overview/$entreprise"_"$ip # en kb/s
+                echo "carte_"$var":"$debent"_"$valent";"$debsor"_"$valsor >> /etc/overview/$entreprise"_"$ip # en kb/s
         else
         for i in `seq 1 $cp`
         do
@@ -224,7 +224,7 @@ moyenne() {
                 valent=`sed -n /'rx'/p /etc/overview/network |awk '{print $3}'`
                 debsor=`sed -n /'tx'/p /etc/overview/network |awk '{print $2}'`
                 valsor=`sed -n /'rx'/p /etc/overview/network |awk '{print $3}'`
-                echo "carte_"$var":"$debent $valent";"$debsor $valsor >> /etc/overview/$entreprise"_"$ip
+                echo "carte_"$var":"$debent"_"$valent";"$debsor"_"$valsor >> /etc/overview/$entreprise"_"$ip
         done
         fi
 fi
